@@ -1,5 +1,9 @@
 #!/bin/sh
 
+escape_re() {
+	echo $1 | sed -E 's/([^a-zA-Z0-9])/\\\1/g'
+}
+
 if [ $# -eq 0 ]; then
 	directory="."
 else
@@ -19,7 +23,8 @@ else
 	esac
 fi
 
-regex="^${directory}\/(.*)\/.git$"
+escaped_dir=$(escape_re $directory)
+regex="^${escaped_dir}\/(.*)\/.git$"
 
 find $directory -name .git -type d -prune -maxdepth 2 -print0 | while IFS= read -r -d $'\0' line; do
     [[ $line =~ $regex ]]
