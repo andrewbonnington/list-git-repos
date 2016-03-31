@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 escape_re() {
 	echo $1 | sed -E 's/([^a-zA-Z0-9])/\\\1/g'
